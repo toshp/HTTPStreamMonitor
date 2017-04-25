@@ -9,3 +9,6 @@
 2017-04-24 21:10:38,714 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-3 - Application started (Dev)
 2017-04-24 21:17:50,180 [INFO] from application in application-akka.actor.default-dispatcher-2 - Shutting down connection pool.
 2017-04-24 21:17:50,360 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-2 - Application started (Dev)
+2017-04-24 22:56:24,925 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-5 - Application started (Dev)
+2017-04-24 22:58:27,407 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-3 - Application started (Dev)
+2017-04-24 22:58:56,396 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-2 - Application started (Dev)

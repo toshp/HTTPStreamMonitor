@@ -24,6 +24,7 @@ public class ResultManager {
         switch (c) {
             case 0: json.put("message", "Expecting JSON data."); break;
             case 1: json.put("message", "Missing parameters."); break;
+            case 2: json.put("message", "Internal error."); break;
         }
         return badRequest(json);
     }

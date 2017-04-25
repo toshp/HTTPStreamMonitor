@@ -1,8 +1,11 @@
-2017-04-22 17:38:26,009 [INFO] from play.api.Play in ForkJoinPool-4-worker-1 - Application started (Dev)
-2017-04-22 17:45:17,639 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-2 - Application started (Dev)
-2017-04-22 17:47:06,133 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-4 - Application started (Dev)
-2017-04-22 17:47:21,386 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-4 - Application started (Dev)
-2017-04-22 17:48:25,999 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-3 - Application started (Dev)
-2017-04-22 17:50:19,182 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-9 - Application started (Dev)
-2017-04-23 13:15:30,593 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-9 - Application started (Dev)
-2017-04-23 17:12:49,141 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-4 - Application started (Dev)
+2017-04-24 21:08:43,755 [WARN] from application in ForkJoinPool-2-worker-1 - application.conf @ file:/Users/toshitpanigrahi/testing_play/streammonitor/target/scala-2.11/classes/application.conf: 6: user is deprecated, use username instead
+2017-04-24 21:08:43,763 [INFO] from application in ForkJoinPool-2-worker-1 - Creating Pool for datasource 'default'
+2017-04-24 21:08:44,173 [INFO] from play.api.db.DefaultDBApi in ForkJoinPool-2-worker-1 - Database [default] connected at jdbc:mysql://localhost/stream_monitor?characterEncoding=UTF-8
+2017-04-24 21:08:44,684 [INFO] from play.api.Play in ForkJoinPool-2-worker-1 - Application started (Dev)
+2017-04-24 21:10:38,521 [INFO] from application in application-akka.actor.default-dispatcher-3 - Shutting down connection pool.
+2017-04-24 21:10:38,636 [WARN] from application in application-akka.actor.default-dispatcher-3 - application.conf @ file:/Users/toshitpanigrahi/testing_play/streammonitor/target/scala-2.11/classes/application.conf: 6: user is deprecated, use username instead
+2017-04-24 21:10:38,637 [INFO] from application in application-akka.actor.default-dispatcher-3 - Creating Pool for datasource 'default'
+2017-04-24 21:10:38,655 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-3 - Database [default] connected at jdbc:mysql://localhost/stream_monitor?characterEncoding=UTF-8
+2017-04-24 21:10:38,714 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-3 - Application started (Dev)
+2017-04-24 21:17:50,180 [INFO] from application in application-akka.actor.default-dispatcher-2 - Shutting down connection pool.
+2017-04-24 21:17:50,360 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-2 - Application started (Dev)

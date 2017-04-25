@@ -4,6 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import play.mvc.*;
 import utils.ResultManager;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class MinMonitorController extends Controller {
     public Result initialize() {
         JsonNode json = request().body().asJson();
@@ -21,7 +26,20 @@ public class MinMonitorController extends Controller {
             return ResultManager.badRequestHandler(1);
         }
 
-        
-        return ok("Hello " + client);
+        //boolean authorized = ClientAuthenticator.verifyClient(client);
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/stream_monitor", "root", "root");
+            Statement stmt = connection.createStatement();
+            ResultSet resultSet = stmt.executeQuery("SELECT * FROM clients");
+
+            while (resultSet.next()) {
+                return ok("Hello " + resultSet.getString("client_key"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultManager.badRequestHandler(2);
+        }
+
+        return ok("No client key");
     }
 }

@@ -1,1 +1,5 @@
 run 9999
+h2-browser
+run 9999
+exit
+run 9999

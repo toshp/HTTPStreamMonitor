@@ -4,7 +4,7 @@
 		module="streammonitor-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20170422155208"
+		publication="20170424210723"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>

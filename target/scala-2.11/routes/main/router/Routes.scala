@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sat Apr 22 17:32:12 EDT 2017
+// @DATE:Tue Apr 25 14:33:20 EDT 2017
 
 package router
 
@@ -20,7 +20,7 @@ class Routes(
   HomeController_0: controllers.HomeController,
   // @LINE:9
   MinMonitorController_2: controllers.MinMonitorController,
-  // @LINE:12
+  // @LINE:15
   Assets_1: controllers.Assets,
   val prefix: String
 ) extends GeneratedRouter {
@@ -31,7 +31,7 @@ class Routes(
     HomeController_0: controllers.HomeController,
     // @LINE:9
     MinMonitorController_2: controllers.MinMonitorController,
-    // @LINE:12
+    // @LINE:15
     Assets_1: controllers.Assets
   ) = this(errorHandler, HomeController_0, MinMonitorController_2, Assets_1, "/")
 
@@ -49,6 +49,7 @@ class Routes(
   def documentation = List(
     ("""GET""", this.prefix, """controllers.HomeController.index"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """min_threshold/init""", """controllers.MinMonitorController.initialize"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """min_threshold/monitor""", """controllers.MinMonitorController.monitor"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(path:String = "/public", file:Asset)"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
@@ -92,10 +93,27 @@ class Routes(
   )
 
   // @LINE:12
-  private[this] lazy val controllers_Assets_versioned2_route = Route("GET",
+  private[this] lazy val controllers_MinMonitorController_monitor2_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("min_threshold/monitor")))
+  )
+  private[this] lazy val controllers_MinMonitorController_monitor2_invoker = createInvoker(
+    MinMonitorController_2.monitor,
+    HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.MinMonitorController",
+      "monitor",
+      Nil,
+      "POST",
+      """ The controller for min-threshold monitoring""",
+      this.prefix + """min_threshold/monitor"""
+    )
+  )
+
+  // @LINE:15
+  private[this] lazy val controllers_Assets_versioned3_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("assets/"), DynamicPart("file", """.+""",false)))
   )
-  private[this] lazy val controllers_Assets_versioned2_invoker = createInvoker(
+  private[this] lazy val controllers_Assets_versioned3_invoker = createInvoker(
     Assets_1.versioned(fakeValue[String], fakeValue[Asset]),
     HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -124,9 +142,15 @@ class Routes(
       }
   
     // @LINE:12
-    case controllers_Assets_versioned2_route(params) =>
+    case controllers_MinMonitorController_monitor2_route(params) =>
+      call { 
+        controllers_MinMonitorController_monitor2_invoker.call(MinMonitorController_2.monitor)
+      }
+  
+    // @LINE:15
+    case controllers_Assets_versioned3_route(params) =>
       call(Param[String]("path", Right("/public")), params.fromPath[Asset]("file", None)) { (path, file) =>
-        controllers_Assets_versioned2_invoker.call(Assets_1.versioned(path, file))
+        controllers_Assets_versioned3_invoker.call(Assets_1.versioned(path, file))
       }
   }
 }

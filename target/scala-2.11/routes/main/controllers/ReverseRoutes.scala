@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sat Apr 22 17:32:12 EDT 2017
+// @DATE:Tue Apr 25 14:33:20 EDT 2017
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -28,14 +28,14 @@ package controllers {
   
   }
 
-  // @LINE:12
+  // @LINE:15
   class ReverseAssets(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:12
+    // @LINE:15
     def versioned(file:Asset): Call = {
       implicit val _rrc = new ReverseRouteContext(Map(("path", "/public")))
       Call("GET", _prefix + { _defaultPrefix } + "assets/" + implicitly[PathBindable[Asset]].unbind("file", file))
@@ -54,6 +54,12 @@ package controllers {
     def initialize(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "min_threshold/init")
+    }
+  
+    // @LINE:12
+    def monitor(): Call = {
+      import ReverseRouteContext.empty
+      Call("POST", _prefix + { _defaultPrefix } + "min_threshold/monitor")
     }
   
   }

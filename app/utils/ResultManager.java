@@ -43,6 +43,7 @@ public class ResultManager {
             case 1: json.put("message", "Created new max monitor."); break;
             case 2: json.put("message", "Created new distance monitor."); break;
             case 3: json.put("message", "Created new geofence monitor."); break;
+            case 4: json.put("message", "Data received."); break;
         }
         return ok(json);
     }

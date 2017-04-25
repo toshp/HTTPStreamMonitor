@@ -47,4 +47,32 @@ public class MinMonitorController extends Controller {
 
         return ResultManager.badRequestHandler(2);
     }
+
+    public Result monitor() {
+        JsonNode json = request().body().asJson();
+
+        if (json == null) {
+            return ResultManager.badRequestHandler(0);
+        }
+
+        String client = json.findPath("client").textValue();
+        String key = json.findPath("key").textValue();
+        String timestamp = json.findPath("timestamp").textValue();
+        double value = json.findPath("value").asDouble(Double.POSITIVE_INFINITY);
+
+        // Check all required param values
+        if(client == null || key == null || timestamp == null || value == Double.POSITIVE_INFINITY) {
+            return ResultManager.badRequestHandler(1);
+        }
+
+        // Client key does not exist
+        if (!ClientManager.verifyClient(client)) {
+            return ResultManager.badRequestHandler(3);
+        }
+
+        MonitorManager.checkMinMonitor(client, key, value, timestamp);
+
+        // Let the client know data was successfully received for processing
+        return ResultManager.okHandler(4);
+    }
 }

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sat Apr 22 17:32:12 EDT 2017
+// @DATE:Tue Apr 25 14:33:20 EDT 2017
 
 package controllers;
 

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Tue Apr 25 17:30:53 EDT 2017
+// @DATE:Wed Apr 26 00:39:39 EDT 2017
 
 package router
 
@@ -20,7 +20,7 @@ class Routes(
   HomeController_0: controllers.HomeController,
   // @LINE:9
   MinMonitorController_2: controllers.MinMonitorController,
-  // @LINE:15
+  // @LINE:21
   Assets_1: controllers.Assets,
   val prefix: String
 ) extends GeneratedRouter {
@@ -31,7 +31,7 @@ class Routes(
     HomeController_0: controllers.HomeController,
     // @LINE:9
     MinMonitorController_2: controllers.MinMonitorController,
-    // @LINE:15
+    // @LINE:21
     Assets_1: controllers.Assets
   ) = this(errorHandler, HomeController_0, MinMonitorController_2, Assets_1, "/")
 
@@ -109,7 +109,7 @@ class Routes(
     )
   )
 
-  // @LINE:15
+  // @LINE:21
   private[this] lazy val controllers_Assets_versioned3_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("assets/"), DynamicPart("file", """.+""",false)))
   )
@@ -147,7 +147,7 @@ class Routes(
         controllers_MinMonitorController_monitor2_invoker.call(MinMonitorController_2.monitor)
       }
   
-    // @LINE:15
+    // @LINE:21
     case controllers_Assets_versioned3_route(params) =>
       call(Param[String]("path", Right("/public")), params.fromPath[Asset]("file", None)) { (path, file) =>
         controllers_Assets_versioned3_invoker.call(Assets_1.versioned(path, file))

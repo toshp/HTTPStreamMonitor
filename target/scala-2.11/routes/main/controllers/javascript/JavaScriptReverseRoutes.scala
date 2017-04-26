@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Wed Apr 26 00:39:39 EDT 2017
+// @DATE:Wed Apr 26 15:58:03 EDT 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -14,6 +14,36 @@ import _root_.play.libs.F
 // @LINE:6
 package controllers.javascript {
   import ReverseRouteContext.empty
+
+  // @LINE:15
+  class ReverseMaxMonitorController(_prefix: => String) {
+
+    def _defaultPrefix: String = {
+      if (_prefix.endsWith("/")) "" else "/"
+    }
+
+  
+    // @LINE:15
+    def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.MaxMonitorController.initialize",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "max_threshold/init"})
+        }
+      """
+    )
+  
+    // @LINE:18
+    def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.MaxMonitorController.monitor",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "max_threshold/monitor"})
+        }
+      """
+    )
+  
+  }
 
   // @LINE:6
   class ReverseHomeController(_prefix: => String) {

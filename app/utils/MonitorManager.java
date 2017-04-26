@@ -39,6 +39,29 @@ public class MonitorManager {
         }
     }
 
+    /**
+     * Registers a new maximum threshold monitor
+     * @param client    the client's API key
+     * @param key       the key to bind threshold to
+     * @param max       the monitored value
+     * @return          true on success
+     */
+    public static boolean newMaxMonitor(String client, String key, double max, URL endpoint) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/stream_monitor", "root", "root");
+            StringBuilder query = new StringBuilder("INSERT INTO max_monitors (client_key, monitor_key, " +
+                    "value, endpoint) VALUES (\"" + client + "\", ");
+            query.append("\"" + key + "\", \"" + max + "\", \"" + endpoint + "\")");
+
+            QueryManager.runUpdate(connection, query.toString());
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static Result preMonitorCheck(String monitor, JsonNode json) {
         if (json == null) {
             return ResultManager.badRequestHandler(0);
@@ -64,15 +87,13 @@ public class MonitorManager {
             if (value == Double.POSITIVE_INFINITY) {
                 return ResultManager.badRequestHandler(1);
             }
-
             CompletableFuture.supplyAsync(() -> MonitorManager.checkMinMonitor(client, key, timestamp, value));
         } else if (monitor.equals("max")) {
             double value = json.findPath("value").asDouble(Double.NEGATIVE_INFINITY);
             if (value == Double.NEGATIVE_INFINITY) {
                 return ResultManager.badRequestHandler(1);
             }
-
-            //CompletableFuture.supplyAsync(() -> MonitorManager.checkMaxMonitor(client, key, timestamp, value));
+            CompletableFuture.supplyAsync(() -> MonitorManager.checkMaxMonitor(client, key, timestamp, value));
         } else if (monitor.equals("dis")) {
             double x = json.findPath("x_coordinate").asDouble(Double.POSITIVE_INFINITY);
             double y = json.findPath("y_coordinate").asDouble(Double.POSITIVE_INFINITY);
@@ -105,6 +126,29 @@ public class MonitorManager {
                 double min = resultSet.getDouble("value");
 
                 if (value < min) {
+                    // Min threshold has been crossed
+                    URL endpoint = resultSet.getURL("endpoint");
+                    System.out.println("NOTIFYING");
+                    ClientManager.notifyClient(endpoint, key, value, timestamp);
+                }
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static Void checkMaxMonitor(String client, String key, String timestamp, double value) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/stream_monitor", "root", "root");
+            String query = "SELECT value, endpoint FROM max_monitors WHERE client_key = \"" + client + "\" AND monitor_key = \"" + key + "\"";
+
+            ResultSet resultSet = QueryManager.runQuery(connection, query);
+            while (resultSet.next()) {
+                double max = resultSet.getDouble("value");
+
+                if (value > max) {
                     // Min threshold has been crossed
                     URL endpoint = resultSet.getURL("endpoint");
                     System.out.println("NOTIFYING");

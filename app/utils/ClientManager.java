@@ -1,5 +1,6 @@
 package utils;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -27,6 +28,17 @@ public class ClientManager {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public static void notifyClient(URL endpoint, String key, double value, String timestamp) {
+        try {
+            for (int i = 0; i < 20; i++) {
+                System.out.println(i);
+                Thread.sleep(500);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

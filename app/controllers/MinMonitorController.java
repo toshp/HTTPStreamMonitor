@@ -8,6 +8,8 @@ import utils.ResultManager;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 public class MinMonitorController extends Controller {
     public Result initialize() {
@@ -48,9 +50,12 @@ public class MinMonitorController extends Controller {
         return ResultManager.badRequestHandler(2);
     }
 
-    public Result monitor() {
+    public CompletionStage<Result> monitor() {
         JsonNode json = request().body().asJson();
+        System.out.println("MOVED ON...");
+        return CompletableFuture.supplyAsync(() -> MonitorManager.preMonitorCheck("min", json));
 
+        /*
         if (json == null) {
             return ResultManager.badRequestHandler(0);
         }
@@ -72,7 +77,9 @@ public class MinMonitorController extends Controller {
 
         MonitorManager.checkMinMonitor(client, key, value, timestamp);
 
+        System.out.println("MOVED ON...");
         // Let the client know data was successfully received for processing
         return ResultManager.okHandler(4);
+        */
     }
 }

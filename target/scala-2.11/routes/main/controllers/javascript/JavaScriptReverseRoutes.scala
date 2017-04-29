@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Wed Apr 26 15:58:03 EDT 2017
+// @DATE:Sat Apr 29 16:08:16 EDT 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -15,7 +15,57 @@ import _root_.play.libs.F
 package controllers.javascript {
   import ReverseRouteContext.empty
 
-  // @LINE:15
+  // @LINE:27
+  class ReverseAssets(_prefix: => String) {
+
+    def _defaultPrefix: String = {
+      if (_prefix.endsWith("/")) "" else "/"
+    }
+
+  
+    // @LINE:27
+    def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.Assets.versioned",
+      """
+        function(file1) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "assets/" + (""" + implicitly[PathBindable[Asset]].javascriptUnbind + """)("file", file1)})
+        }
+      """
+    )
+  
+  }
+
+  // @LINE:9
+  class ReverseMinMonitorController(_prefix: => String) {
+
+    def _defaultPrefix: String = {
+      if (_prefix.endsWith("/")) "" else "/"
+    }
+
+  
+    // @LINE:9
+    def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.MinMonitorController.initialize",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "min_threshold/init"})
+        }
+      """
+    )
+  
+    // @LINE:18
+    def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.MinMonitorController.monitor",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "min_threshold/monitor"})
+        }
+      """
+    )
+  
+  }
+
+  // @LINE:12
   class ReverseMaxMonitorController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -23,7 +73,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:15
+    // @LINE:12
     def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.MaxMonitorController.initialize",
       """
@@ -33,7 +83,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:18
+    // @LINE:21
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.MaxMonitorController.monitor",
       """
@@ -65,50 +115,30 @@ package controllers.javascript {
   
   }
 
-  // @LINE:21
-  class ReverseAssets(_prefix: => String) {
+  // @LINE:15
+  class ReverseDisMonitorController(_prefix: => String) {
 
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:21
-    def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.Assets.versioned",
-      """
-        function(file1) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "assets/" + (""" + implicitly[PathBindable[Asset]].javascriptUnbind + """)("file", file1)})
-        }
-      """
-    )
-  
-  }
-
-  // @LINE:9
-  class ReverseMinMonitorController(_prefix: => String) {
-
-    def _defaultPrefix: String = {
-      if (_prefix.endsWith("/")) "" else "/"
-    }
-
-  
-    // @LINE:9
+    // @LINE:15
     def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.MinMonitorController.initialize",
+      "controllers.DisMonitorController.initialize",
       """
         function() {
-          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "min_threshold/init"})
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "distance/init"})
         }
       """
     )
   
-    // @LINE:12
+    // @LINE:24
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.MinMonitorController.monitor",
+      "controllers.DisMonitorController.monitor",
       """
         function() {
-          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "min_threshold/monitor"})
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "distance/monitor"})
         }
       """
     )

@@ -35,16 +35,29 @@ public class ClientManager {
     }
 
     /**
-     * Sends a POST notification to the client when an event occurs
+     * Sends a POST notification to the client when a threshold event occurs
      * @param monitor   the monitor sending the notification
      * @param endpoint  the callback URL to notify
      * @param key       the object key that was monitored
      * @param value     the triggering value
      * @param timestamp when the event occurred
      */
-    public static void notifyClient(String monitor, URL endpoint, String key, double value, String timestamp) {
+    public static void notifyClientValue(String monitor, URL endpoint, String key, double value, String timestamp) {
+        notifyClientPoint(monitor, endpoint, key, value, Double.POSITIVE_INFINITY, timestamp);
+    }
+
+    /**
+     * Sends a POST notification to the client when a point event occurs
+     * @param monitor   the monitor sending the notification
+     * @param endpoint  the callback URL to notify
+     * @param key       the object key that was monitored
+     * @param x         point x coordinate
+     * @param y         point y coordinate
+     * @param timestamp when the event occurred
+     */
+    public static void notifyClientPoint(String monitor, URL endpoint, String key, double x, double y, String timestamp) {
         try {
-            String notification = ResultManager.notificationResult(monitor, key, value, timestamp);
+            String notification = ResultManager.notificationResult(monitor, key, x, y, timestamp);
 
             HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
             connection.setDoOutput(true);

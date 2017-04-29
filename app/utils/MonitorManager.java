@@ -62,6 +62,43 @@ public class MonitorManager {
         }
     }
 
+    /**
+     * Registers a new max distance monitor from a origin point.
+     * The distance is in terms of the coordinate system units, not meters or miles, etc.
+     * Conversion should be done on client side to lat/long if needed.
+     * @param client
+     * @param key
+     * @param max_distance
+     * @param x_origin
+     * @param y_origin
+     * @param endpoint
+     * @return
+     */
+    public static boolean newDisMonitor(String client, String key, double max_distance, double x_origin, double y_origin, URL endpoint) {
+        try {
+            max_distance = Math.abs(max_distance);
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/stream_monitor", "root", "root");
+            StringBuilder query = new StringBuilder("INSERT INTO dis_monitors (client_key, monitor_key, " +
+                    "max_distance, x_origin, y_origin, endpoint) VALUES (\"" + client + "\", ");
+            query.append("\"" + key + "\", \"" + max_distance + "\", \"" + x_origin + "\", \"" + y_origin +
+                    "\", \"" + endpoint + "\")");
+
+            QueryManager.runUpdate(connection, query.toString());
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Standard data checking when it arrives to monitor
+     * and launches async task
+     * @param monitor   which monitor to direct data to
+     * @param json      the incoming json data
+     * @return          badRequest if malformed, ok Result if data valid
+     */
     public static Result preMonitorCheck(String monitor, JsonNode json) {
         if (json == null) {
             return ResultManager.badRequestHandler(0);
@@ -87,6 +124,7 @@ public class MonitorManager {
             if (value == Double.POSITIVE_INFINITY) {
                 return ResultManager.badRequestHandler(1);
             }
+
             System.out.println("Received data: " + client + " " + key + " " + timestamp + " " + value);
             CompletableFuture.supplyAsync(() -> MonitorManager.checkMinMonitor(client, key, timestamp, value));
         } else if (monitor.equals("max")) {
@@ -94,19 +132,21 @@ public class MonitorManager {
             if (value == Double.NEGATIVE_INFINITY) {
                 return ResultManager.badRequestHandler(1);
             }
+
             System.out.println("Received data: " + client + " " + key + " " + timestamp + " " + value);
             CompletableFuture.supplyAsync(() -> MonitorManager.checkMaxMonitor(client, key, timestamp, value));
         } else if (monitor.equals("dis")) {
-            double x = json.findPath("x_coordinate").asDouble(Double.POSITIVE_INFINITY);
-            double y = json.findPath("y_coordinate").asDouble(Double.POSITIVE_INFINITY);
+            double x = json.findPath("x").asDouble(Double.POSITIVE_INFINITY);
+            double y = json.findPath("y").asDouble(Double.POSITIVE_INFINITY);
             if (x == Double.POSITIVE_INFINITY || y == Double.POSITIVE_INFINITY) {
                 return ResultManager.badRequestHandler(1);
             }
 
-            //CompletableFuture.supplyAsync(() -> MonitorManager.checkDisMonitor(client, key, timestamp, x, y));
+            System.out.println("Received data: " + client + " " + key + " " + timestamp + " " + x + " " + y);
+            CompletableFuture.supplyAsync(() -> MonitorManager.checkDisMonitor(client, key, timestamp, x, y));
         } else if (monitor.equals("geo")) {
-            double x = json.findPath("x_coordinate").asDouble(Double.POSITIVE_INFINITY);
-            double y = json.findPath("y_coordinate").asDouble(Double.POSITIVE_INFINITY);
+            double x = json.findPath("x").asDouble(Double.POSITIVE_INFINITY);
+            double y = json.findPath("y").asDouble(Double.POSITIVE_INFINITY);
             if (x == Double.POSITIVE_INFINITY || y == Double.POSITIVE_INFINITY) {
                 return ResultManager.badRequestHandler(1);
             }
@@ -131,7 +171,7 @@ public class MonitorManager {
                     // Min threshold has been crossed
                     URL endpoint = resultSet.getURL("endpoint");
                     System.out.println("NOTIFYING");
-                    ClientManager.notifyClient("min", endpoint, key, value, timestamp);
+                    ClientManager.notifyClientValue("min", endpoint, key, value, timestamp);
                 }
             }
             connection.close();
@@ -154,7 +194,34 @@ public class MonitorManager {
                     // Min threshold has been crossed
                     URL endpoint = resultSet.getURL("endpoint");
                     System.out.println("NOTIFYING");
-                    ClientManager.notifyClient("max", endpoint, key, value, timestamp);
+                    ClientManager.notifyClientValue("max", endpoint, key, value, timestamp);
+                }
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static Void checkDisMonitor(String client, String key, String timestamp, double x, double y) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/stream_monitor", "root", "root");
+            String query = "SELECT x_origin, y_origin, max_distance, endpoint FROM dis_monitors WHERE client_key = \"" + client + "\" AND monitor_key = \"" + key + "\"";
+
+            ResultSet resultSet = QueryManager.runQuery(connection, query);
+            while (resultSet.next()) {
+                double max_distance = resultSet.getDouble("max_distance");
+                double x_origin = resultSet.getDouble("x_origin");
+                double y_origin = resultSet.getDouble("y_origin");
+
+                double distance = Math.abs(Math.sqrt(Math.pow((x - x_origin), 2) + Math.pow((y - y_origin), 2)));
+
+                if (distance > max_distance) {
+                    // Distance threshold has been crossed
+                    URL endpoint = resultSet.getURL("endpoint");
+                    System.out.println("NOTIFYING");
+                    ClientManager.notifyClientPoint("dis", endpoint, key, x, y, timestamp);
                 }
             }
             connection.close();

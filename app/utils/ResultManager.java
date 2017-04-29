@@ -52,12 +52,14 @@ public class ResultManager {
 
     /**
      * Returns an ok Result for notifications
-     *
      */
-    public static String notificationResult(String monitor, String key, double value, String timestamp) {
+    public static String notificationResult(String monitor, String key, double value, double value2, String timestamp) {
         ObjectNode json = Json.newObject();
         json.put("result", "success");
-        json.put("monitor", monitor).put("key", key).put("value", value).put("timestamp", timestamp);
+        if (value2 == Double.POSITIVE_INFINITY)
+            json.put("monitor", monitor).put("key", key).put("value", value).put("timestamp", timestamp);
+        else
+            json.put("monitor", monitor).put("key", key).put("x", value).put("y", value2).put("timestamp", timestamp);
         return json.toString();
     }
 }

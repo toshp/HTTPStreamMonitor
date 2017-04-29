@@ -4,7 +4,7 @@
 		module="streammonitor_2.11"
 		revision="1.0-SNAPSHOT"
 		status="integration"
-		publication="20170424210730"
+		publication="20170429110443"
 	>
 		<description>
 		StreamMonitor

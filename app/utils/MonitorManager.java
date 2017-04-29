@@ -87,12 +87,14 @@ public class MonitorManager {
             if (value == Double.POSITIVE_INFINITY) {
                 return ResultManager.badRequestHandler(1);
             }
+            System.out.println("Received data: " + client + " " + key + " " + timestamp + " " + value);
             CompletableFuture.supplyAsync(() -> MonitorManager.checkMinMonitor(client, key, timestamp, value));
         } else if (monitor.equals("max")) {
             double value = json.findPath("value").asDouble(Double.NEGATIVE_INFINITY);
             if (value == Double.NEGATIVE_INFINITY) {
                 return ResultManager.badRequestHandler(1);
             }
+            System.out.println("Received data: " + client + " " + key + " " + timestamp + " " + value);
             CompletableFuture.supplyAsync(() -> MonitorManager.checkMaxMonitor(client, key, timestamp, value));
         } else if (monitor.equals("dis")) {
             double x = json.findPath("x_coordinate").asDouble(Double.POSITIVE_INFINITY);
@@ -129,7 +131,7 @@ public class MonitorManager {
                     // Min threshold has been crossed
                     URL endpoint = resultSet.getURL("endpoint");
                     System.out.println("NOTIFYING");
-                    ClientManager.notifyClient(endpoint, key, value, timestamp);
+                    ClientManager.notifyClient("min", endpoint, key, value, timestamp);
                 }
             }
             connection.close();
@@ -152,7 +154,7 @@ public class MonitorManager {
                     // Min threshold has been crossed
                     URL endpoint = resultSet.getURL("endpoint");
                     System.out.println("NOTIFYING");
-                    ClientManager.notifyClient(endpoint, key, value, timestamp);
+                    ClientManager.notifyClient("max", endpoint, key, value, timestamp);
                 }
             }
             connection.close();

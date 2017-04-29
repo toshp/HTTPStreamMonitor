@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.libs.Json;
 import play.mvc.*;
 
+import java.net.URLEncoder;
+
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
 
@@ -46,5 +48,16 @@ public class ResultManager {
             case 4: json.put("message", "Data received."); break;
         }
         return ok(json);
+    }
+
+    /**
+     * Returns an ok Result for notifications
+     *
+     */
+    public static String notificationResult(String monitor, String key, double value, String timestamp) {
+        ObjectNode json = Json.newObject();
+        json.put("result", "success");
+        json.put("monitor", monitor).put("key", key).put("value", value).put("timestamp", timestamp);
+        return json.toString();
     }
 }

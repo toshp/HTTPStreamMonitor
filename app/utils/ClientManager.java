@@ -1,5 +1,8 @@
 package utils;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,13 +34,30 @@ public class ClientManager {
         }
     }
 
-    public static void notifyClient(URL endpoint, String key, double value, String timestamp) {
+    /**
+     * Sends a POST notification to the client when an event occurs
+     * @param monitor   the monitor sending the notification
+     * @param endpoint  the callback URL to notify
+     * @param key       the object key that was monitored
+     * @param value     the triggering value
+     * @param timestamp when the event occurred
+     */
+    public static void notifyClient(String monitor, URL endpoint, String key, double value, String timestamp) {
         try {
-            for (int i = 0; i < 20; i++) {
-                System.out.println(i);
-                Thread.sleep(500);
-            }
-        } catch (Exception e) {
+            String notification = ResultManager.notificationResult(monitor, key, value, timestamp);
+
+            HttpURLConnection connection = (HttpURLConnection) endpoint.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+
+            OutputStream os = connection.getOutputStream();
+            os.write(notification.getBytes());
+            os.flush();
+            os.close();
+
+            int responseCode = connection.getResponseCode();
+            System.out.println("POST Response Code: " + responseCode);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

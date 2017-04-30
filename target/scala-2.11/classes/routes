@@ -14,6 +14,10 @@ POST     /max_threshold/init        controllers.MaxMonitorController.initialize
 # The controller for the distance monitor initialization
 POST     /distance/init             controllers.DisMonitorController.initialize
 
+# The controller for the distance monitor initialization
+POST     /geofence/init             controllers.GeoMonitorController.initialize
+
+
 # The controller for min-threshold monitoring
 POST     /min_threshold/monitor     controllers.MinMonitorController.monitor
 
@@ -22,6 +26,9 @@ POST     /max_threshold/monitor     controllers.MaxMonitorController.monitor
 
 # The controller for distance monitoring
 POST     /distance/monitor          controllers.DisMonitorController.monitor
+
+# The controller for distance monitoring
+POST     /geofence/monitor          controllers.GeoMonitorController.monitor
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

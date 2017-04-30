@@ -93,6 +93,37 @@ public class MonitorManager {
     }
 
     /**
+     * Registers a new geofence monitor. (x1, y1) is top left of rectangle and
+     * (x2, y2) is bottom left of rectangle.
+     * @param client
+     * @param key
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param endpoint
+     * @return
+     */
+    public static boolean newGeoMonitor(String client, String key,
+                                        double x1, double y1,
+                                        double x2, double y2, URL endpoint) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/stream_monitor", "root", "root");
+            StringBuilder query = new StringBuilder("INSERT INTO geo_monitors (client_key, monitor_key, " +
+                    "x1, y1, x2, y2, endpoint) VALUES (\"" + client + "\", ");
+            query.append("\"" + key + "\", \"" + x1 + "\", \"" + y1 + "\", \"" + x2 + "\", \"" + y2 +
+                    "\", \"" + endpoint + "\")");
+
+            QueryManager.runUpdate(connection, query.toString());
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * Standard data checking when it arrives to monitor
      * and launches async task
      * @param monitor   which monitor to direct data to
@@ -151,7 +182,8 @@ public class MonitorManager {
                 return ResultManager.badRequestHandler(1);
             }
 
-            //CompletableFuture.supplyAsync(() -> MonitorManager.checkGeoMonitor(client, key, timestamp, x, y));
+            System.out.println("Received data: " + client + " " + key + " " + timestamp + " " + x + " " + y);
+            CompletableFuture.supplyAsync(() -> MonitorManager.checkGeoMonitor(client, key, timestamp, x, y));
         }
 
         // Let the client know data was successfully received for processing
@@ -218,6 +250,32 @@ public class MonitorManager {
                 double distance = Math.abs(Math.sqrt(Math.pow((x - x_origin), 2) + Math.pow((y - y_origin), 2)));
 
                 if (distance > max_distance) {
+                    // Distance threshold has been crossed
+                    URL endpoint = resultSet.getURL("endpoint");
+                    System.out.println("NOTIFYING");
+                    ClientManager.notifyClientPoint("dis", endpoint, key, x, y, timestamp);
+                }
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static Void checkGeoMonitor(String client, String key, String timestamp, double x, double y) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/stream_monitor", "root", "root");
+            String query = "SELECT x1, y1, x2, y2, endpoint FROM geo_monitors WHERE client_key = \"" + client + "\" AND monitor_key = \"" + key + "\"";
+
+            ResultSet resultSet = QueryManager.runQuery(connection, query);
+            while (resultSet.next()) {
+                double x1 = resultSet.getDouble("x1");
+                double y1 = resultSet.getDouble("y1");
+                double x2 = resultSet.getDouble("x2");
+                double y2 = resultSet.getDouble("y2");
+
+                if (x1 <= x && x <= x2 && y1 >= y && y >= y2) {
                     // Distance threshold has been crossed
                     URL endpoint = resultSet.getURL("endpoint");
                     System.out.println("NOTIFYING");

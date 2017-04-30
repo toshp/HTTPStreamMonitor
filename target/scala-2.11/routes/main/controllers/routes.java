@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sat Apr 29 16:08:16 EDT 2017
+// @DATE:Sun Apr 30 10:08:15 EDT 2017
 
 package controllers;
 
@@ -14,6 +14,7 @@ public class routes {
   public static final controllers.ReverseMaxMonitorController MaxMonitorController = new controllers.ReverseMaxMonitorController(RoutesPrefix.byNamePrefix());
   public static final controllers.ReverseHomeController HomeController = new controllers.ReverseHomeController(RoutesPrefix.byNamePrefix());
   public static final controllers.ReverseDisMonitorController DisMonitorController = new controllers.ReverseDisMonitorController(RoutesPrefix.byNamePrefix());
+  public static final controllers.ReverseGeoMonitorController GeoMonitorController = new controllers.ReverseGeoMonitorController(RoutesPrefix.byNamePrefix());
 
   public static class javascript {
     
@@ -22,6 +23,7 @@ public class routes {
     public static final controllers.javascript.ReverseMaxMonitorController MaxMonitorController = new controllers.javascript.ReverseMaxMonitorController(RoutesPrefix.byNamePrefix());
     public static final controllers.javascript.ReverseHomeController HomeController = new controllers.javascript.ReverseHomeController(RoutesPrefix.byNamePrefix());
     public static final controllers.javascript.ReverseDisMonitorController DisMonitorController = new controllers.javascript.ReverseDisMonitorController(RoutesPrefix.byNamePrefix());
+    public static final controllers.javascript.ReverseGeoMonitorController GeoMonitorController = new controllers.javascript.ReverseGeoMonitorController(RoutesPrefix.byNamePrefix());
   }
 
 }

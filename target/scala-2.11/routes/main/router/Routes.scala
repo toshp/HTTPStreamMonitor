@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sat Apr 29 16:08:16 EDT 2017
+// @DATE:Sun Apr 30 10:08:15 EDT 2017
 
 package router
 
@@ -19,13 +19,15 @@ class Routes(
   // @LINE:6
   HomeController_0: controllers.HomeController,
   // @LINE:9
-  MinMonitorController_2: controllers.MinMonitorController,
+  MinMonitorController_3: controllers.MinMonitorController,
   // @LINE:12
-  MaxMonitorController_3: controllers.MaxMonitorController,
+  MaxMonitorController_4: controllers.MaxMonitorController,
   // @LINE:15
   DisMonitorController_1: controllers.DisMonitorController,
-  // @LINE:27
-  Assets_4: controllers.Assets,
+  // @LINE:18
+  GeoMonitorController_2: controllers.GeoMonitorController,
+  // @LINE:34
+  Assets_5: controllers.Assets,
   val prefix: String
 ) extends GeneratedRouter {
 
@@ -34,20 +36,22 @@ class Routes(
     // @LINE:6
     HomeController_0: controllers.HomeController,
     // @LINE:9
-    MinMonitorController_2: controllers.MinMonitorController,
+    MinMonitorController_3: controllers.MinMonitorController,
     // @LINE:12
-    MaxMonitorController_3: controllers.MaxMonitorController,
+    MaxMonitorController_4: controllers.MaxMonitorController,
     // @LINE:15
     DisMonitorController_1: controllers.DisMonitorController,
-    // @LINE:27
-    Assets_4: controllers.Assets
-  ) = this(errorHandler, HomeController_0, MinMonitorController_2, MaxMonitorController_3, DisMonitorController_1, Assets_4, "/")
+    // @LINE:18
+    GeoMonitorController_2: controllers.GeoMonitorController,
+    // @LINE:34
+    Assets_5: controllers.Assets
+  ) = this(errorHandler, HomeController_0, MinMonitorController_3, MaxMonitorController_4, DisMonitorController_1, GeoMonitorController_2, Assets_5, "/")
 
   import ReverseRouteContext.empty
 
   def withPrefix(prefix: String): Routes = {
     router.RoutesPrefix.setPrefix(prefix)
-    new Routes(errorHandler, HomeController_0, MinMonitorController_2, MaxMonitorController_3, DisMonitorController_1, Assets_4, prefix)
+    new Routes(errorHandler, HomeController_0, MinMonitorController_3, MaxMonitorController_4, DisMonitorController_1, GeoMonitorController_2, Assets_5, prefix)
   }
 
   private[this] val defaultPrefix: String = {
@@ -59,9 +63,11 @@ class Routes(
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """min_threshold/init""", """controllers.MinMonitorController.initialize"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """max_threshold/init""", """controllers.MaxMonitorController.initialize"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """distance/init""", """controllers.DisMonitorController.initialize"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """geofence/init""", """controllers.GeoMonitorController.initialize"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """min_threshold/monitor""", """controllers.MinMonitorController.monitor"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """max_threshold/monitor""", """controllers.MaxMonitorController.monitor"""),
     ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """distance/monitor""", """controllers.DisMonitorController.monitor"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """geofence/monitor""", """controllers.GeoMonitorController.monitor"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(path:String = "/public", file:Asset)"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
@@ -92,7 +98,7 @@ class Routes(
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("min_threshold/init")))
   )
   private[this] lazy val controllers_MinMonitorController_initialize1_invoker = createInvoker(
-    MinMonitorController_2.initialize,
+    MinMonitorController_3.initialize,
     HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.MinMonitorController",
@@ -109,7 +115,7 @@ class Routes(
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("max_threshold/init")))
   )
   private[this] lazy val controllers_MaxMonitorController_initialize2_invoker = createInvoker(
-    MaxMonitorController_3.initialize,
+    MaxMonitorController_4.initialize,
     HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.MaxMonitorController",
@@ -139,11 +145,28 @@ class Routes(
   )
 
   // @LINE:18
-  private[this] lazy val controllers_MinMonitorController_monitor4_route = Route("POST",
+  private[this] lazy val controllers_GeoMonitorController_initialize4_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("geofence/init")))
+  )
+  private[this] lazy val controllers_GeoMonitorController_initialize4_invoker = createInvoker(
+    GeoMonitorController_2.initialize,
+    HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.GeoMonitorController",
+      "initialize",
+      Nil,
+      "POST",
+      """ The controller for the distance monitor initialization""",
+      this.prefix + """geofence/init"""
+    )
+  )
+
+  // @LINE:22
+  private[this] lazy val controllers_MinMonitorController_monitor5_route = Route("POST",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("min_threshold/monitor")))
   )
-  private[this] lazy val controllers_MinMonitorController_monitor4_invoker = createInvoker(
-    MinMonitorController_2.monitor,
+  private[this] lazy val controllers_MinMonitorController_monitor5_invoker = createInvoker(
+    MinMonitorController_3.monitor,
     HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.MinMonitorController",
@@ -155,12 +178,12 @@ class Routes(
     )
   )
 
-  // @LINE:21
-  private[this] lazy val controllers_MaxMonitorController_monitor5_route = Route("POST",
+  // @LINE:25
+  private[this] lazy val controllers_MaxMonitorController_monitor6_route = Route("POST",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("max_threshold/monitor")))
   )
-  private[this] lazy val controllers_MaxMonitorController_monitor5_invoker = createInvoker(
-    MaxMonitorController_3.monitor,
+  private[this] lazy val controllers_MaxMonitorController_monitor6_invoker = createInvoker(
+    MaxMonitorController_4.monitor,
     HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.MaxMonitorController",
@@ -172,11 +195,11 @@ class Routes(
     )
   )
 
-  // @LINE:24
-  private[this] lazy val controllers_DisMonitorController_monitor6_route = Route("POST",
+  // @LINE:28
+  private[this] lazy val controllers_DisMonitorController_monitor7_route = Route("POST",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("distance/monitor")))
   )
-  private[this] lazy val controllers_DisMonitorController_monitor6_invoker = createInvoker(
+  private[this] lazy val controllers_DisMonitorController_monitor7_invoker = createInvoker(
     DisMonitorController_1.monitor,
     HandlerDef(this.getClass.getClassLoader,
       "router",
@@ -189,12 +212,29 @@ class Routes(
     )
   )
 
-  // @LINE:27
-  private[this] lazy val controllers_Assets_versioned7_route = Route("GET",
+  // @LINE:31
+  private[this] lazy val controllers_GeoMonitorController_monitor8_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("geofence/monitor")))
+  )
+  private[this] lazy val controllers_GeoMonitorController_monitor8_invoker = createInvoker(
+    GeoMonitorController_2.monitor,
+    HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.GeoMonitorController",
+      "monitor",
+      Nil,
+      "POST",
+      """ The controller for distance monitoring""",
+      this.prefix + """geofence/monitor"""
+    )
+  )
+
+  // @LINE:34
+  private[this] lazy val controllers_Assets_versioned9_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("assets/"), DynamicPart("file", """.+""",false)))
   )
-  private[this] lazy val controllers_Assets_versioned7_invoker = createInvoker(
-    Assets_4.versioned(fakeValue[String], fakeValue[Asset]),
+  private[this] lazy val controllers_Assets_versioned9_invoker = createInvoker(
+    Assets_5.versioned(fakeValue[String], fakeValue[Asset]),
     HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.Assets",
@@ -218,13 +258,13 @@ class Routes(
     // @LINE:9
     case controllers_MinMonitorController_initialize1_route(params) =>
       call { 
-        controllers_MinMonitorController_initialize1_invoker.call(MinMonitorController_2.initialize)
+        controllers_MinMonitorController_initialize1_invoker.call(MinMonitorController_3.initialize)
       }
   
     // @LINE:12
     case controllers_MaxMonitorController_initialize2_route(params) =>
       call { 
-        controllers_MaxMonitorController_initialize2_invoker.call(MaxMonitorController_3.initialize)
+        controllers_MaxMonitorController_initialize2_invoker.call(MaxMonitorController_4.initialize)
       }
   
     // @LINE:15
@@ -234,27 +274,39 @@ class Routes(
       }
   
     // @LINE:18
-    case controllers_MinMonitorController_monitor4_route(params) =>
+    case controllers_GeoMonitorController_initialize4_route(params) =>
       call { 
-        controllers_MinMonitorController_monitor4_invoker.call(MinMonitorController_2.monitor)
+        controllers_GeoMonitorController_initialize4_invoker.call(GeoMonitorController_2.initialize)
       }
   
-    // @LINE:21
-    case controllers_MaxMonitorController_monitor5_route(params) =>
+    // @LINE:22
+    case controllers_MinMonitorController_monitor5_route(params) =>
       call { 
-        controllers_MaxMonitorController_monitor5_invoker.call(MaxMonitorController_3.monitor)
+        controllers_MinMonitorController_monitor5_invoker.call(MinMonitorController_3.monitor)
       }
   
-    // @LINE:24
-    case controllers_DisMonitorController_monitor6_route(params) =>
+    // @LINE:25
+    case controllers_MaxMonitorController_monitor6_route(params) =>
       call { 
-        controllers_DisMonitorController_monitor6_invoker.call(DisMonitorController_1.monitor)
+        controllers_MaxMonitorController_monitor6_invoker.call(MaxMonitorController_4.monitor)
       }
   
-    // @LINE:27
-    case controllers_Assets_versioned7_route(params) =>
+    // @LINE:28
+    case controllers_DisMonitorController_monitor7_route(params) =>
+      call { 
+        controllers_DisMonitorController_monitor7_invoker.call(DisMonitorController_1.monitor)
+      }
+  
+    // @LINE:31
+    case controllers_GeoMonitorController_monitor8_route(params) =>
+      call { 
+        controllers_GeoMonitorController_monitor8_invoker.call(GeoMonitorController_2.monitor)
+      }
+  
+    // @LINE:34
+    case controllers_Assets_versioned9_route(params) =>
       call(Param[String]("path", Right("/public")), params.fromPath[Asset]("file", None)) { (path, file) =>
-        controllers_Assets_versioned7_invoker.call(Assets_4.versioned(path, file))
+        controllers_Assets_versioned9_invoker.call(Assets_5.versioned(path, file))
       }
   }
 }

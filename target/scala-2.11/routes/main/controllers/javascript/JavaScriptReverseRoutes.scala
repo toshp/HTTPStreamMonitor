@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sat Apr 29 16:08:16 EDT 2017
+// @DATE:Sun Apr 30 10:08:15 EDT 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -15,7 +15,7 @@ import _root_.play.libs.F
 package controllers.javascript {
   import ReverseRouteContext.empty
 
-  // @LINE:27
+  // @LINE:34
   class ReverseAssets(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -23,7 +23,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:27
+    // @LINE:34
     def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.versioned",
       """
@@ -53,7 +53,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:18
+    // @LINE:22
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.MinMonitorController.monitor",
       """
@@ -83,7 +83,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:21
+    // @LINE:25
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.MaxMonitorController.monitor",
       """
@@ -133,12 +133,42 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:24
+    // @LINE:28
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.DisMonitorController.monitor",
       """
         function() {
           return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "distance/monitor"})
+        }
+      """
+    )
+  
+  }
+
+  // @LINE:18
+  class ReverseGeoMonitorController(_prefix: => String) {
+
+    def _defaultPrefix: String = {
+      if (_prefix.endsWith("/")) "" else "/"
+    }
+
+  
+    // @LINE:18
+    def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.GeoMonitorController.initialize",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "geofence/init"})
+        }
+      """
+    )
+  
+    // @LINE:31
+    def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.GeoMonitorController.monitor",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "geofence/monitor"})
         }
       """
     )

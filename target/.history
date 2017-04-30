@@ -5,3 +5,5 @@ exit
 run 9999
 exit
 run 9999
+playGenerateSecret
+playUpdateSecret

@@ -7,3 +7,10 @@ exit
 run 9999
 playGenerateSecret
 playUpdateSecret
+dist
+exit
+run 9999
+clean
+run 9999
+ls
+run 9999

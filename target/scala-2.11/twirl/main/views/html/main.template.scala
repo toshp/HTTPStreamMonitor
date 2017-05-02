@@ -76,7 +76,7 @@ Seq[Any](format.raw/*7.32*/("""
 object main extends main_Scope0.main
               /*
                   -- GENERATED --
-                  DATE: Sat Apr 22 13:41:22 EDT 2017
+                  DATE: Sun Apr 30 23:22:10 EDT 2017
                   SOURCE: /Users/toshitpanigrahi/testing_play/streammonitor/app/views/main.scala.html
                   HASH: ced9de8f59633a7ea800e83accbc72c0ef643e9c
                   MATRIX: 1002->260|1127->290|1155->292|1235->397|1271->406|1306->414|1332->419|1421->481|1436->487|1499->528|1587->589|1602->595|1663->634|1725->758|1762->768|1790->775|1827->785|1868->799|1883->805|1944->845

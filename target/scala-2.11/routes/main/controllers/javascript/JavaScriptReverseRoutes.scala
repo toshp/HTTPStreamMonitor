@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sun Apr 30 10:08:15 EDT 2017
+// @DATE:Sun Apr 30 23:38:53 EDT 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -15,7 +15,7 @@ import _root_.play.libs.F
 package controllers.javascript {
   import ReverseRouteContext.empty
 
-  // @LINE:34
+  // @LINE:6
   class ReverseAssets(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -23,7 +23,25 @@ package controllers.javascript {
     }
 
   
-    // @LINE:34
+    // @LINE:6
+    def at: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.Assets.at",
+      """
+        function(path0,file1) {
+        
+          if (path0 == """ + implicitly[JavascriptLiteral[String]].to("/public") + """ && file1 == """ + implicitly[JavascriptLiteral[String]].to("html/demo.html") + """) {
+            return _wA({method:"GET", url:"""" + _prefix + """"})
+          }
+        
+          if (path0 == """ + implicitly[JavascriptLiteral[String]].to("/public/stylesheets") + """) {
+            return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "stylesheets/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("file", file1)})
+          }
+        
+        }
+      """
+    )
+  
+    // @LINE:35
     def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.versioned",
       """
@@ -35,7 +53,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:9
+  // @LINE:10
   class ReverseMinMonitorController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -43,7 +61,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:9
+    // @LINE:10
     def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.MinMonitorController.initialize",
       """
@@ -53,7 +71,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:22
+    // @LINE:23
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.MinMonitorController.monitor",
       """
@@ -65,7 +83,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:12
+  // @LINE:13
   class ReverseMaxMonitorController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -73,7 +91,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:12
+    // @LINE:13
     def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.MaxMonitorController.initialize",
       """
@@ -83,7 +101,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:25
+    // @LINE:26
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.MaxMonitorController.monitor",
       """
@@ -95,27 +113,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:6
-  class ReverseHomeController(_prefix: => String) {
-
-    def _defaultPrefix: String = {
-      if (_prefix.endsWith("/")) "" else "/"
-    }
-
-  
-    // @LINE:6
-    def index: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.index",
-      """
-        function() {
-          return _wA({method:"GET", url:"""" + _prefix + """"})
-        }
-      """
-    )
-  
-  }
-
-  // @LINE:15
+  // @LINE:16
   class ReverseDisMonitorController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -123,7 +121,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:15
+    // @LINE:16
     def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.DisMonitorController.initialize",
       """
@@ -133,7 +131,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:28
+    // @LINE:29
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.DisMonitorController.monitor",
       """
@@ -145,7 +143,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:18
+  // @LINE:19
   class ReverseGeoMonitorController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -153,7 +151,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:18
+    // @LINE:19
     def initialize: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.GeoMonitorController.initialize",
       """
@@ -163,7 +161,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:31
+    // @LINE:32
     def monitor: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.GeoMonitorController.monitor",
       """

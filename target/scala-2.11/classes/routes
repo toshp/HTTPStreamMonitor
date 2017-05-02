@@ -3,7 +3,8 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
+GET      /                          controllers.Assets.at(path="/public", file="html/demo.html")
+GET      /stylesheets/*file         controllers.Assets.at(path="/public/stylesheets", file)
 
 # The controller for the min-threshold monitor initialization
 POST     /min_threshold/init        controllers.MinMonitorController.initialize

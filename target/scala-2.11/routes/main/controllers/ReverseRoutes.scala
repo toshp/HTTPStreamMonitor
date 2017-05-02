@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sun Apr 30 10:08:15 EDT 2017
+// @DATE:Sun Apr 30 23:38:53 EDT 2017
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -13,14 +13,33 @@ import _root_.play.libs.F
 // @LINE:6
 package controllers {
 
-  // @LINE:34
+  // @LINE:6
   class ReverseAssets(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:34
+    // @LINE:6
+    def at(path:String, file:String): Call = {
+    
+      (path: @unchecked, file: @unchecked) match {
+      
+        // @LINE:6
+        case (path, file) if path == "/public" && file == "html/demo.html" =>
+          implicit val _rrc = new ReverseRouteContext(Map(("path", "/public"), ("file", "html/demo.html")))
+          Call("GET", _prefix)
+      
+        // @LINE:7
+        case (path, file) if path == "/public/stylesheets" =>
+          implicit val _rrc = new ReverseRouteContext(Map(("path", "/public/stylesheets")))
+          Call("GET", _prefix + { _defaultPrefix } + "stylesheets/" + implicitly[PathBindable[String]].unbind("file", file))
+      
+      }
+    
+    }
+  
+    // @LINE:35
     def versioned(file:Asset): Call = {
       implicit val _rrc = new ReverseRouteContext(Map(("path", "/public")))
       Call("GET", _prefix + { _defaultPrefix } + "assets/" + implicitly[PathBindable[Asset]].unbind("file", file))
@@ -28,20 +47,20 @@ package controllers {
   
   }
 
-  // @LINE:9
+  // @LINE:10
   class ReverseMinMonitorController(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:9
+    // @LINE:10
     def initialize(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "min_threshold/init")
     }
   
-    // @LINE:22
+    // @LINE:23
     def monitor(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "min_threshold/monitor")
@@ -49,20 +68,20 @@ package controllers {
   
   }
 
-  // @LINE:12
+  // @LINE:13
   class ReverseMaxMonitorController(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:12
+    // @LINE:13
     def initialize(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "max_threshold/init")
     }
   
-    // @LINE:25
+    // @LINE:26
     def monitor(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "max_threshold/monitor")
@@ -70,35 +89,20 @@ package controllers {
   
   }
 
-  // @LINE:6
-  class ReverseHomeController(_prefix: => String) {
-    def _defaultPrefix: String = {
-      if (_prefix.endsWith("/")) "" else "/"
-    }
-
-  
-    // @LINE:6
-    def index(): Call = {
-      import ReverseRouteContext.empty
-      Call("GET", _prefix)
-    }
-  
-  }
-
-  // @LINE:15
+  // @LINE:16
   class ReverseDisMonitorController(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:15
+    // @LINE:16
     def initialize(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "distance/init")
     }
   
-    // @LINE:28
+    // @LINE:29
     def monitor(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "distance/monitor")
@@ -106,20 +110,20 @@ package controllers {
   
   }
 
-  // @LINE:18
+  // @LINE:19
   class ReverseGeoMonitorController(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:18
+    // @LINE:19
     def initialize(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "geofence/init")
     }
   
-    // @LINE:31
+    // @LINE:32
     def monitor(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "geofence/monitor")

@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+    
+<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+<title>JSONdata.stream Monitor Demo</title>
+
+<link rel="stylesheet" type="text/css" href="stylesheets/style-std.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/style-demo.css">
+
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+
+<script>
+    
+</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <h1 class="logo">JSON<span>data.stream</span></h1>
+            <p class="tagline">Easy data stream monitoring over HTTP</p>
+            <!--<p class="sub-tagline">Made by Toshit Panigrahi for CS 562</p>-->
+        </div>
+        
+        <div class="top-nav">
+            <h3>API Documentation</h3>
+            <a href="#">Threshold Monitoring</a>
+            <a href="#">Distance Monitoring</a>
+            <a href="#">Geofence Monitoring</a>
+        </div> <!-- top-nav -->
+        
+        
+        <div class="big-section">
+            <h1 class="padding-bottom">Threshold Monitoring</h1>
+            <p class="section-text">A threshold monitor can be set to monitor a data stream to detect when a value exceeds or falls below a specific value.</p>
+            
+            <h2 class="padding-bottom">Initialization</h2>
+            <p class="section-text">To initialize a min threshold monitor, you need to send a POST request with the following parameters in JSON to the endpoint.</p>
+            
+            <div class="code-header">
+                <p><span>POST</span> http://jsondata.stream/min_threshold/init</p>
+            </div>
+            <code class="margin-bottom">
+            {"client" : "cfcd208495", "key" : "AAPL", "min" : "142.00", "endpoint" : "https://hookb.in/vqL5kWdB"}
+            </code>
+            
+            <div class="param-table padding-bottom">
+                <div class="param-row">
+                    <div class="param-col">client</div>
+                    <div class="param-col">Your API key.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">key</div>
+                    <div class="param-col">Maximum ten character "name" given to this monitor.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">min</div>
+                    <div class="param-col">The min threshold value to monitor for. You will be notified if a value goes below this min value. </div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">endpoint</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+            </div>
+            
+            <p class="section-text">Initializing a max threshold monitor is similar, but you specify a maximum threshold instead. You will be notified if the data you send exceeds this max-value.</p>
+            
+            <div class="code-header">
+                <p><span>POST</span> http://jsondata.stream/max_threshold/init</p>
+            </div>
+            <code class="margin-bottom">
+            {"client" : "cfcd208495", "key" : "GE", "max" : "29.00", "endpoint" : "https://hookb.in/vqL5kWdB"}
+            </code>
+            
+            
+            <h2 class="margin-top padding-bottom">Sending Data</h2>
+            <p class="section-text">To initialize a min threshold monitor, you need to send a POST request with the following parameters in JSON to the endpoint.</p>
+            
+            <div class="code-header">
+                <p><span>POST</span> http://jsondata.stream/min_threshold/monitor</p>
+            </div>
+            <code class="margin-bottom">
+            {"client" : "cfcd208495", "key" : "AAPL", "value" : "142.80", "timestamp" : "1493145062"}
+            </code>
+            
+            <div class="param-table">
+                <div class="param-row">
+                    <div class="param-col">client</div>
+                    <div class="param-col">Your API key.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">key</div>
+                    <div class="param-col">The name of the monitor to match the value against.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">value</div>
+                    <div class="param-col">The data value sent for monitoring.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">timestamp</div>
+                    <div class="param-col">A time stamp (in any format) of when this data point was generated.</div>
+                </div>
+            </div>
+            
+        </div> <!-- big-section -->
+        
+        <div class="big-section">
+            <h1 class="padding-bottom">Distance Monitoring</h1>
+            <p class="section-text">A threshold monitor can be set to monitor a data stream to detect when a value exceeds or falls below a specific value.</p>
+            
+            <h2 class="padding-bottom">Initialization</h2>
+            <p class="section-text">To initialize a min threshold monitor, you need to send a POST request with the following parameters in JSON to the endpoint.</p>
+            
+            <div class="code-header">
+                <p><span>POST</span> http://jsondata.stream/distance/init</p>
+            </div>
+            <code class="margin-bottom">
+            {"client" : "cfcd208495", "key" : "car1", "max_distance" : "10", "x" : "4.0" , "y": "5.5", "endpoint" : "https://hookb.in/vqL5kWdB"}
+            </code>
+            
+            <div class="param-table margin-bottom">
+                <div class="param-row">
+                    <div class="param-col">client</div>
+                    <div class="param-col">Your API key.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">key</div>
+                    <div class="param-col">Maximum ten character "name" given to this monitor.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">max_distance</div>
+                    <div class="param-col">The min threshold value to monitor for. You will be notified if a value goes below this min value. </div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">x</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+                
+                <div class="param-row">
+                    <div class="param-col">y</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">endpoint</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+            </div>
+            
+            <h2 class="margin-top padding-bottom">Sending Data</h2>
+            <p class="section-text">To initialize a min threshold monitor, you need to send a POST request with the following parameters in JSON to the endpoint.</p>
+            
+            <div class="code-header">
+                <p><span>POST</span> http://jsondata.stream/distance/monitor</p>
+            </div>
+            <code class="margin-bottom">
+            {"client" : "cfcd208495", "key" : "car1", "x" : "4.5", "y": "5.0", "timestamp" : "1493145065"}
+            </code>
+            
+            <div class="param-table">
+                <div class="param-row">
+                    <div class="param-col">client</div>
+                    <div class="param-col">Your API key.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">key</div>
+                    <div class="param-col">The name of the monitor to match the value against.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">x</div>
+                    <div class="param-col">The data value sent for monitoring.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">y</div>
+                    <div class="param-col">The data value sent for monitoring.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">timestamp</div>
+                    <div class="param-col">A time stamp (in any format) of when this data point was generated.</div>
+                </div>
+            </div>
+        </div> <!-- big-section -->
+        
+        <div class="big-section">
+            <h1 class="padding-bottom">Geofence Monitoring</h1>
+            <p class="section-text">A threshold monitor can be set to monitor a data stream to detect when a value exceeds or falls below a specific value.</p>
+            
+            <h2 class="padding-bottom">Initialization</h2>
+            <p class="section-text">To initialize a min threshold monitor, you need to send a POST request with the following parameters in JSON to the endpoint.</p>
+            
+            <div class="code-header">
+                <p><span>POST</span> http://jsondata.stream/geofence/init</p>
+            </div>
+            <code class="margin-bottom">
+            {"client" : "cfcd208495", "key" : "car2", "x1" : "0" , "y1": "6", "x2": "6.5", "y2" : "1.0", "endpoint" : "https://hookb.in/vqL5kWdB"}
+            </code>
+            
+            <div class="param-table margin-bottom">
+                <div class="param-row">
+                    <div class="param-col">client</div>
+                    <div class="param-col">Your API key.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">key</div>
+                    <div class="param-col">Maximum ten character "name" given to this monitor.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">x1</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+                
+                <div class="param-row">
+                    <div class="param-col">y1</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">x2</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+                
+                <div class="param-row">
+                    <div class="param-col">y2</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">endpoint</div>
+                    <div class="param-col">The URL that will be notified when this threshold is crossed.</div>
+                </div>
+            </div>
+            
+            <h2 class="margin-top padding-bottom">Sending Data</h2>
+            <p class="section-text">To initialize a min threshold monitor, you need to send a POST request with the following parameters in JSON to the endpoint.</p>
+            
+            <div class="code-header">
+                <p><span>POST</span> http://jsondata.stream/geofence/monitor</p>
+            </div>
+            <code class="margin-bottom">
+            {"client" : "cfcd208495", "key" : "car2", "x" : "7.5", "y": "5.0", "timestamp" : "1493145065"}
+            </code>
+            
+            <div class="param-table padding-bottom">
+                <div class="param-row">
+                    <div class="param-col">client</div>
+                    <div class="param-col">Your API key.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">key</div>
+                    <div class="param-col">The name of the monitor to match the value against.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">x</div>
+                    <div class="param-col">The data value sent for monitoring.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">y</div>
+                    <div class="param-col">The data value sent for monitoring.</div>
+                </div>
+                <div class="param-row">
+                    <div class="param-col">timestamp</div>
+                    <div class="param-col">A time stamp (in any format) of when this data point was generated.</div>
+                </div>
+            </div>
+        </div> <!-- big-section -->
+    </div> <!-- container -->
+</body>
+</html>

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/toshitpanigrahi/testing_play/streammonitor/conf/routes
-// @DATE:Sun Apr 30 10:08:15 EDT 2017
+// @DATE:Sun Apr 30 23:38:53 EDT 2017
 
 
 package router {
